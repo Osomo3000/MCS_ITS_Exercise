@@ -279,3 +279,4 @@ AuthType| Von Basic auf Digest
 AuthName| AuthName wurde verändert
 AuthUserFile|Verlinkt jetzt auf die generierte Digest-Datei.
 
+<img src="digest.png">
