@@ -1,3 +1,6 @@
+Please donate for PS5 :(
+<img src="https://img.shields.io/badge/donation-FerdoMat-blue">
+
 <!-- Inhaltsverzeichnis -->
 ## Inhaltsverzeichnis
 * [Vorbereitungen](#vorbereitungen)
