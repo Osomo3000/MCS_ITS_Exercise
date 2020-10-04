@@ -192,5 +192,62 @@ make install
 
 ### Konfiguration
 #### Basic Authentication
+* ```.htpasswd``` - Datei generieren
+
+Damit sich der User über die Basic-Authentication anmelden kann, wird zuerst ein Benutzer mit dem dazugehörigen Passwort angelegt. Dies geschieht mit dem folgenden Befehl:
+
+```sh
+/usr/local/httpd/bin ./htpasswd [options] [Dateiname] [Benutzername]
+```
+```sh
+/usr/local/httpd/bin ./htpasswd -c -B .htpasswd Username
+```
+Option | Funktion 
+------------ | -------------
+```-c``` | Erstellen des Passwortfiles. Bei vorhandenem Passwortfile, wird das alte File überschrieben.
+```-B```| Verwende Bcrypt Verschlüsselung
+
+Nach der Eingabe der gewünschten Daten, wird zweimal nach dem gewünschten Passwort gefragt:
+
+<img src="Bild1.png">
+
+Nachdem das Passwort File generiert wurde, wird das File an einem gewünschten Ort abgelegt.
+
+>Achtung: Das File auf keinen Fall in den selben Ordner, wo die .htaccess Datei liegen wird.
+
+* ```.htaccess``` - Datei erstellen
+
+Die .htaccess Datei wird verwendet, um die Konfigurationen für den jeweiligen Ordner einzutragen. Hier muss auch der Pfad des .htpasswd Files eingegeben werden, um sich erfolgreich anmelden zu können.
+
+<img src="htaccess.png">
+AuthType: Art der Authentication. In meinem Beispiel Digest und Basic.
+AuthName: Die Authenticationsbezeichnung
+AuthUserFile: Pfad, wo die .htpasswd Datei liegt
+Require: Zugriffbestimmungen. valid-user = Nur für gültige Nutzer
+
+Parameter | Beschreibung
+----------|-------------
+AuthType | Art der Authentication. In meinem Beispiel Digest und Basic
+AuthName | Die Authenticationbezeichnung
+AuthUserFile | Pfad, wo die .htpasswd Datei liegt
+Require | Zugriffbestimmungen: valid-user = Nur für gültige Nutzer
+
+Das .htaccess File wird in dem zum schützenden Ordner abgelegt. In meinem Fall ist das der htdocs Ordner, der die index.html datei enthält. Das .htaccess File wird für gewöhnlich nicht im FTP Ordner angezeigt.
+
+* ```httpd.conf```-Datei konfigurieren
+
+Als erstes sollten die benötigten Module aktiviert werden. Dazu entfern man die davorstehenden ```#```-Zeichen. 
+
+<img src="tempsnip.png">
+
+Nachdem die Module aktiviert worden sind, müssen die Konfigurationsinformationen von der .htaccess Datei genauso in der httpd.conf File aktualisert werden
+
+<img src="httpd.png">
+
+Der Apache-Server sollte nach jeder Änderung in der Config-File neugestartet werden. Dazu wird der folgende Befehl eingegeben:
+
+```sh
+/usr/local/httpd/bin/apachectl restart
+```
 
 #### Digest Authentication
