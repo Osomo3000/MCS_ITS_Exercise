@@ -280,3 +280,10 @@ AuthName| AuthName wurde verändert
 AuthUserFile|Verlinkt jetzt auf die generierte Digest-Datei.
 
 <img src="digest.png">
+
+Der Apache-Server sollte nach jeder Änderung in der Config-File neugestartet werden. Dazu wird der folgende Befehl eingegeben:
+
+````sh
+/usr/local/httpd/bin/apachectl restart
+````
+
