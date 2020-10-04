@@ -220,10 +220,6 @@ Nachdem das Passwort File generiert wurde, wird das File an einem gewünschten O
 Die .htaccess Datei wird verwendet, um die Konfigurationen für den jeweiligen Ordner einzutragen. Hier muss auch der Pfad des .htpasswd Files eingegeben werden, um sich erfolgreich anmelden zu können.
 
 <img src="htaccess.png">
-AuthType: Art der Authentication. In meinem Beispiel Digest und Basic.
-AuthName: Die Authenticationsbezeichnung
-AuthUserFile: Pfad, wo die .htpasswd Datei liegt
-Require: Zugriffbestimmungen. valid-user = Nur für gültige Nutzer
 
 Parameter | Beschreibung
 ----------|-------------
@@ -251,3 +247,35 @@ Der Apache-Server sollte nach jeder Änderung in der Config-File neugestartet we
 ```
 
 #### Digest Authentication
+
+* ```.htdigest```- Datei generieren
+
+Um eine Digest Authentication durchzuführen, muss genauso wie bei der Basic Authentication ein User angelegt werden. Diesmal wird der folgende Befehl aufgerufen:
+
+```sh
+/usr/local/httpd/bin ./htdigest -c /usr/local/httpd/password/digest "Private" Username
+```
+
+```sh
+/usr/local/httpd/bin ./htdigest [options] [Pfad] [realm] [Username]
+```
+
+Parameter | Funktion
+- | -
+```c```| Erstellen des Digestfiles
+Pfad | Erstellen des Passwortfiles im angegeben Pfad
+realm | Die Realm Bezeichnung
+Username | Username der angelegt werden soll
+
+Wie bei der Basic Authentication wird jetzt weimal nach einem frei wählbaren Passwort gefragt und nach der Bestätigung das File erstellt.
+
+```httpd.conf```- Datei aktualisieren
+
+Folgende Parameter haben sich im Gegensatz zur Basic Authentication geändert:
+
+Parameter|Änderung
+-|-
+AuthType| Von Basic auf Digest
+AuthName| AuthName wurde verändert
+AuthUserFile|Verlinkt jetzt auf die generierte Digest-Datei.
+
